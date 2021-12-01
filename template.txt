@@ -9,8 +9,8 @@ sys.path.append('..')
 from AOCHandler import AOCHandler
 
 def main():
-   pass
+    pass
 
 
 if __name__ == '__main__':
-   main()
+    main()
