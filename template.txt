@@ -1,0 +1,16 @@
+""""
+File: day{day}.py
+Authors: Matthew Frances, Nicholas Conn
+Date: 12-{day}-2021
+Description:
+"""
+import sys
+sys.path.append('..')
+from AOCHandler import AOCHandler
+
+def main():
+   pass
+
+
+if __name__ == '__main__':
+   main()
