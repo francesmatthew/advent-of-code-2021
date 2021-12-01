@@ -5,6 +5,7 @@ Date: 11-30-2021
 Description: Handle program input and output on the filesystem
 """
 
+
 class AOCHandler:
     BAD_INPUT_LINES = ['']
 
@@ -20,15 +21,11 @@ class AOCHandler:
         Return a list string from the input file, newline-delimited
         """
         with open(self.input_file_name, 'r') as input_file:
-            input = input_file.read()
-            input = input.replace('\r', '') # remove all carriage returns
-            input = input.split('\n', -1)
+            data_in = input_file.read()
+            data_in = data_in.replace('\r', '')  # remove all carriage returns
+            data_in = data_in.split('\n', -1)
         # remove empty strings (caused by trailing newline chars)
-        # must iterate from last-to-first when removing elements in-place
-        for index in range( (len(input)-1), -1, -1):
-            if input[index] in self.BAD_INPUT_LINES:
-                del input[index]
-        return input
+        return [i for i in data_in if i not in self.BAD_INPUT_LINES]
 
     def get_input_int(self):
         """
@@ -36,10 +33,7 @@ class AOCHandler:
         newline-delimited
         This function may raise errors if input cannot be represented as an int
         """
-        input_list = self.get_input()
-        for i in range(len(input_list)):
-            input_list[i] = int(input_list[i])
-        return input_list
+        return [int(i) for i in self.get_input()]
 
     def write_output(self, *args, **kwargs):
         """
@@ -52,10 +46,10 @@ class AOCHandler:
         if 'verbose' not in kwargs:
             kwargs['verbose'] = False
 
-        with open(self.output_file_name, 'w') as output:
+        with open(self.output_file_name, 'w') as data_out:
             for arg in args:
                 arg = str(arg)
-                output.write(arg + '\n')
+                data_out.write(arg + '\n')
                 if kwargs['verbose']:
                     print(arg)
             return
