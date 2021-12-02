@@ -5,7 +5,8 @@ Date: 12-{day}-2021
 Description:
 """
 import sys
-sys.path.append('..')
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from AOCHandler import AOCHandler
 
 def main():
