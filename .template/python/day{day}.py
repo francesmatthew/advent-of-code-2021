@@ -4,13 +4,16 @@ Authors: Matthew Frances, Nicholas Conn
 Date: 12-{day}-2021
 Description:
 """
+from AOCHandler import AOCHandler
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-from AOCHandler import AOCHandler
 
 def main():
-    pass
+    # get I/O identifier from command-line argument
+    if len(sys.argv) < 2:
+        print("Useage: python3 ./python/day{day}.py <I/O file identifier>")
+        return
+    aoc_handler = AOCHandler(sys.argv[1])
 
 
 if __name__ == '__main__':

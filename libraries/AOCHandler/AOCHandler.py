@@ -8,13 +8,15 @@ Description: Handle program input and output on the filesystem
 
 class AOCHandler:
     BAD_INPUT_LINES = ['']
+    INPUT_FILE_FORMAT = "inputs/<id>-input.txt"
+    OUTPUT_FILE_FORMAT = "outputs/<id>-output.txt"
 
-    def __init__(self, input_file_name, output_file_name):
+    def __init__(self, identifier):
         """
         Initalize Advent of Code Handler with input and output filenames
         """
-        self.input_file_name = input_file_name
-        self.output_file_name = output_file_name
+        self.input_file_name = self.INPUT_FILE_FORMAT.replace("<id>", identifier)
+        self.output_file_name = self.OUTPUT_FILE_FORMAT.replace("<id>", identifier)
 
     def get_input(self):
         """

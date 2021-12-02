@@ -28,7 +28,12 @@ def main():
     # forward X does two things:
     #   It increases your horizontal position by X units.
     #   It increases your depth by your aim multiplied by X.
-    aoc_handler = AOCHandler("input.txt", "output.txt")
+
+    # get I/O identifier from command-line argument
+    if len(sys.argv) < 2:
+        print("Useage: python3 ./python/day02.py <I/O file identifier>")
+        return
+    aoc_handler = AOCHandler(sys.argv[1])
     data_in = aoc_handler.get_input()
 
     hpos = 0

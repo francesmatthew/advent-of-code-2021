@@ -8,11 +8,12 @@ from AOCHandler import AOCHandler
 import sys
 import os
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-
-
 def main():
-    aoc_handler = AOCHandler("input.txt", "output.txt")
+    # get I/O identifier from command-line argument
+    if len(sys.argv) < 2:
+        print("Useage: python3 ./python/day01.py <I/O file identifier>")
+        return
+    aoc_handler = AOCHandler(sys.argv[1])
     data_in = aoc_handler.get_input_int()
 
     # count the number of times the current entry is greater than the previous entry
