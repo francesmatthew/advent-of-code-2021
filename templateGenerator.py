@@ -5,87 +5,48 @@ Date: 11-30-2021
 Description: Create files for each puzzle according to a template
 """
 import os
-from sys import argv
+import sys
+from distutils.dir_util import copy_tree
 
-TEMPLATE_DIR = ".template"
-DAY_REPLACE_KEY = "{day}"
-# the first element in each array should match the dir name under the template dir
-PYTHON = ["python", "py"]
-CPP = ["cpp", "c++"]
 
-def replace_text(text, args):
-    """
-    Replace patterns in a string with given values
-    params:
-        text: string to be modified
-        args: list of (key, value) tuples, where key is the pattern to match...
-              in text and value is what replaces it
-    return:
-        text parameter after replacing each key with its corresponding value
-    """
-    for (key, value) in args:
-        text = text.replace(key, value)
-    return text
+LANGUAGE = "python"
+PATH = "./solutions/day"
+KEY = "{day}"
 
-def copy_template_file(src_dir_name, dest_dir_name, src_file_name, *args):
-    """
-    Copy template files, filling in templated information where able
-    Will match templated information in file name and file contents
-    params:
-        src_dir_name: string folder path where template file is
-        dest_dir_name: string folder path where template file will be copied
-        src_file_name: string name of file located in source directory
-        args: any number of (key, value) tuples, where key is the pattern to match...
-              in the file and value is what replaces it
-    """
-    dest_file_name = replace_text(src_file_name, args)
-    src = f"{src_dir_name}/{src_file_name}"
-    dest = f"{dest_dir_name}/{dest_file_name}"
-    # check that the file doesn't exist already before overwriting
-    if (os.path.exists(dest)):
-        print(f"File {dest} already exists, aborting")
-        return
-    # read in the file data and fill in the information for the day
-    with open(src, 'r') as template:
-        file_data = template.read()
-        file_data = replace_text(file_data, args)
-        with open(dest, "w") as destination:
-            destination.write(file_data)
+if not sys.argv[1]:
+    print("try running with 'python3 ./templateGenerator.py <day>")
+    sys.exit()
+else:
+    CURRENT_DAY = f"{int(sys.argv[1]):02d}"
 
-def generate_new_day():
-    """
-    Copy template files for a given programming language on a given day
-    Arguments are given by command-line argument
-    """
-    # get the day from argv
-    if (len(argv) < 3):
-        print("Useage: python3 templateGenerator.py <day> <language>")
-        return
-    # use f-strings to assure the day will be two digits with a leading 0
-    day = f"{int(argv[1]):02d}"
-    # resolve what language to copy
-    lang = "none"
-    for lang_const in (PYTHON, CPP):
-        if (argv[2] in lang_const):
-            lang = lang_const[0]
-    if (lang == "none"):
-        print(f"Invalid language {argv[2]}")
+
+def generate_directory():
+    #Check if valid templates exist
+    if(os.path.exists("./.templates")):
+        #copy template to solutions folder
+
+        if not os.path.exists(f"./solutions/day{CURRENT_DAY}"):
+            copy_tree("./.templates", "./solutions")
+            #rename templated day to current day
+            os.rename(PATH+"{day}", f"{PATH}{CURRENT_DAY}")
+            PY_PATH = PATH+f"{CURRENT_DAY}{LANGUAGE}\day"
+            os.rename(f"./solutions/day{CURRENT_DAY}/python/day{{day}}.py",f"./solutions/day{CURRENT_DAY}/python/day{CURRENT_DAY}.py")
+            #open file in directory, and replace '{day}' with current day
+            with open(f"./solutions/day{CURRENT_DAY}/python/day{CURRENT_DAY}.py") as r:
+                #read into string
+                template = r.read()
+                #replace with current day
+                template = template.replace(KEY, str(CURRENT_DAY))
+                #clear and rewrite with proper date
+                with open(f"./solutions/day{CURRENT_DAY}/python/day{CURRENT_DAY}.py", 'w') as f:
+                    f.write(template)
+        else:
+            print("Cannot overwrite previous day")
+            return
+    else:
+        print("No template file found")
         return
 
-    # create the target dir
-    new_dir_name = f"day{day}"
-    if not(os.path.exists(new_dir_name)):
-        os.mkdir(new_dir_name)
-    # create the new sub-directory according to the desired language
-    new_dir_name = new_dir_name + '/' + lang
-    if not(os.path.exists(new_dir_name)):
-        os.mkdir(new_dir_name)
 
-    # copy each file from the template directory into the target directory
-    template_dir_name = TEMPLATE_DIR + '/' + lang
-    for file_name in os.listdir(template_dir_name):
-        copy_template_file(template_dir_name, new_dir_name, file_name, (DAY_REPLACE_KEY, day))
-
-
-if __name__ == "__main__":
-    generate_new_day()
+if __name__ == '__main__':
+    generate_directory()
