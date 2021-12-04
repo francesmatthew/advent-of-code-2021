@@ -4,7 +4,7 @@ Authors: Matthew Frances, Nicholas Conn
 Date: 12-{day}-2021
 Description: https://adventofcode.com/2021/day/{day}
 """
-from AOCHandler import AOCHandler
+from AOCHandler import AOCHandler, BadInputException
 import sys
 import os
 
