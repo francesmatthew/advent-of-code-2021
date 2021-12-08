@@ -65,18 +65,40 @@ def p2(entries):
                     decoded_digit = unique_num
                     decode_segments[decoded_digit] = digit_segments
             # then, decode numbers that have a non-unique number of segments
+            # requires the mappings for numbers with unique number of segments
+            for i in UNIQUE_SEGMENTS:
+                if decode_segments.get(i, None) is None:
+                    raise Exception(f"Unknown segment mapping to {i}")
             if decoded_digit is None:
-                decoded_digit = 0 # TODO: figure out how to deduce these combinations of segments
+                # determine what the digit is based on the number of segments it shares...
+                # ...with the known mappings for 1, 4, 7, and 8
+                intersect1 = len(intersect(decode_segments[1], digit_segments))
+                intersect4 = len(intersect(decode_segments[4], digit_segments))
                 if len(digit_segments) == 6:
                     # number is 0, 6, or 9
-                    pass
+                    if intersect4 == 4:
+                        decoded_digit = 9
+                    else:
+                        # number is 0 or 6
+                        if intersect1 == 2:
+                            decoded_digit = 0
+                        else:
+                            decoded_digit = 6
                 elif len(digit_segments) == 5:
                     # number is 2, 3, or 5
-                    pass
+                    if intersect1 == 2:
+                        decoded_digit = 3
+                    else:
+                        # number if 2 or 5
+                        if intersect4 == 3:
+                            decoded_digit = 5
+                        else:
+                            decoded_digit = 2
             # append this digit to the output
             output *= 10
             output += decoded_digit
         sum_output += output
+    return sum_output
 
 def main():
     # get I/O identifier from command-line argument
