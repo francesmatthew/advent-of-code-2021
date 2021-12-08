@@ -1,8 +1,8 @@
 """"
-File: day{day}.py
+File: day09.py
 Authors: Matthew Frances, Nicholas Conn
-Date: 12-{day}-2021
-Description: https://adventofcode.com/2021/day/{day}
+Date: 12-09-2021
+Description: https://adventofcode.com/2021/day/9
 """
 from AOCHandler import AOCHandler, BadInputException
 import sys
@@ -17,7 +17,7 @@ def p2(data):
 def main():
     # get I/O identifier from command-line argument
     if len(sys.argv) < 2:
-        print("Useage: python3 ./python/day{day}.py <I/O file identifier>")
+        print("Useage: python3 ./python/day09.py <I/O file identifier>")
         return
     aoc_handler = AOCHandler(sys.argv[1])
 
