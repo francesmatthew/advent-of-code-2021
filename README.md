@@ -1,7 +1,7 @@
 # Advent of Code
 
 This is a collection of [Advent of Code](http://adventofcode.com/) solutions
- written by Matthew Frances and Nick Conn
+ written by Matthew Frances, Nick Conn, and Peter Scrandis
 
 ### Dependencies
 Install the custom Advent of Code Handler module using pip:
