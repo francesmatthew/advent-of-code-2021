@@ -1,6 +1,6 @@
 """"
 File: day{day}.py
-Authors: Matthew Frances, Nicholas Conn
+Authors: Matthew Frances, Nicholas Conn, Peter Scrandis
 Date: 12-{day}-2021
 Description: https://adventofcode.com/2021/day/{day}
 """
