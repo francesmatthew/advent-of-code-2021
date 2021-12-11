@@ -36,9 +36,10 @@ def tick(data):
     return (num_flashes, count(data) == 0 )
 
 def p1(data):
+    octo_matrix = [ [int(char) for char in line] for line in data]
     num_flashes = 0
     for _ in range(100):
-        num_flashes += tick(data)[0]
+        num_flashes += tick(octo_matrix)[0]
     return num_flashes
 
 def count(matrix):
@@ -48,19 +49,13 @@ def count(matrix):
             count += matrix[i][j]
     return count
 
-def matrix_print(matrix):
-    print()
-    for i in range(len(matrix)):
-        print(matrix[i])
-    print()
 
 def p2(data):
+    octo_matrix = [ [int(char) for char in line] for line in data]
     synced = False
-    i = 100
+    i = 0
     while (not synced and i < 100000):
-        print(i)
-        matrix_print(data)
-        synced = tick(data)[1]
+        synced = tick(octo_matrix)[1]
         i += 1
     return i
 
@@ -75,16 +70,8 @@ def main():
     if len(data_in) < 1:
         raise BadInputException()
 
-    # parse input data
-    data = []
-    for i in range(len(data_in)):
-        row = []
-        for j in range(len(data_in[i])):
-            row.append(int(data_in[i][j]))
-        data.append(row)
-
-    solution1 = p1(data[:])
-    solution2 = p2(data[:])
+    solution1 = p1(data_in)
+    solution2 = p2(data_in)
 
     aoc_handler.write_output(solution1, solution2, verbose=True)
 
